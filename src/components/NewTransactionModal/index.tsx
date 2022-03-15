@@ -1,9 +1,13 @@
 import { FormEvent, useState } from "react";
+import { api } from "../../services/api";
 import Modal from "react-modal";
+
 import { Container, TransactionTypeContainer, RadioBox } from "./styles"
+
 import closeImg from "../../assets/close.svg"
 import incomeBtn from "../../assets/income.svg"
 import outcomeBtn from "../../assets/outcome.svg"
+
 
 interface TransactionModalProps {
     isOpen: boolean;
@@ -18,7 +22,17 @@ export function NewTransactionModal({ isOpen, onModalClose }: TransactionModalPr
     const [category, setCategory] = useState('')
 
     function handleCreateNewTransaction(event: FormEvent) {
-        event.preventDefault();        
+        event.preventDefault();
+        
+        const data = {
+            title,
+            value,
+            category,
+            type
+        }
+
+        api.post('/transactions', data)
+        
     }
 
     return (
@@ -47,7 +61,7 @@ export function NewTransactionModal({ isOpen, onModalClose }: TransactionModalPr
                 <input 
                 placeholder="Valor"
                 type="number" 
-                value={value === 0 ? '' : value }
+                value={value}
                 onChange={event => setValue(Number(event.target.value))}
 
                 />
