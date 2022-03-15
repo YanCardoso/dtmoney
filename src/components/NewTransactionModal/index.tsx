@@ -1,5 +1,6 @@
+import { useState } from "react";
 import Modal from "react-modal";
-import { Container, TransactionTypeContainer } from "./styles"
+import { Container, TransactionTypeContainer, RadioBox } from "./styles"
 import closeImg from "../../assets/close.svg"
 import incomeBtn from "../../assets/income.svg"
 import outcomeBtn from "../../assets/outcome.svg"
@@ -10,11 +11,14 @@ interface TransactionModalProps {
 }
 
 export function NewTransactionModal({ isOpen, onModalClose }: TransactionModalProps) {
+
+    const [type, setType] = useState('deposit')
+
     return (
         <Modal
             isOpen={isOpen}
             onRequestClose={onModalClose}
-            overlayClassName="trasactionModal-overlay"
+            overlayClassName="transactionModal-overlay"
             className="transactionModal-content"
         >
             <button 
@@ -32,19 +36,23 @@ export function NewTransactionModal({ isOpen, onModalClose }: TransactionModalPr
                 <input placeholder="Valor" type="number" />
 
                 <TransactionTypeContainer>
-                    <button
-                    type="button"
+                    <RadioBox
+                        type="button"
+                        isActive={type === 'deposit'}
+                        onClick={() => { setType('deposit') }}
                     >
                         <img src={incomeBtn} alt="Entrada" />
                         <span>Entrada</span>
-                    </button>
+                    </RadioBox>
 
-                    <button
-                    type="button"
+                    <RadioBox
+                        type="button"
+                        isActive={type === 'withdraw'}
+                        onClick={() => { setType('withdraw') }}
                     >
                         <img src={outcomeBtn} alt="Saída" />
                         <span>Saída</span>
-                    </button>
+                    </RadioBox>
                 </TransactionTypeContainer>
 
                 <input placeholder="Categoria" />
