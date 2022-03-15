@@ -14,6 +14,29 @@ createServer({
 
   },
 
+  seeds(server){
+    server.db.loadData({
+      transactions: [
+        {
+          id: 1,
+          title: 'Freelance de website',
+          type: 'deposit',
+          amount: 2000,
+          category: 'Dev',
+          createdAt: new Date('2021-02-12 09:00:00'),
+        },
+        {
+          id: 2,
+          title: 'Aluguel',
+          type: 'withdraw',
+          amount: 1000,
+          category: 'Moradia',
+          createdAt: new Date('2021-03-23 04:00:00'),
+        },
+      ],
+    })
+  },
+
   routes() {
     this.namespace = 'api';
     this.get('/transactions', () => {
